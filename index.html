@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <section class="toolboard">
+            <div class="row">
+                <label class="title">Shapes</label>
+                 <ul class="options">
+                    <li class="option tool" id="rectangle">
+                        <img src="icons/rectangle.svg" ></img>
+                        <span>Rectangle</span>
+                    </li>
+                    <li class="option tool" id="circle">
+                        <img src="icons/circle.svg" ></img>
+                        <span>Cirlce</span>
+                    </li>
+                    <li class="option tool" id="triangle">
+                        <img src="icons/triangle.svg" ></img>
+                        <span>Triangle</span>
+                    </li>
+                    <li class="option">
+                        <input type="checkbox" id="fill-color">
+                        <label for="fill-color">Fill color</label>
+                    </li>
+                 </ul>   
+            </div>
+            <div class="row">
+                <label class="title">Options</label>
+                 <ul class="options">
+                    <li class="option tool" id="brush">
+                        <img src="icons/brush.svg" ></img>
+                        <span>Brush</span>
+                    </li>
+                    <li class="option tool" id="eraser">
+                        <img src="icons/eraser.svg" ></img>
+                        <span>Eraser</span>
+                    </li>
+                    <li class="option">
+                        <input type="range" id="size-slider" max="25" min="1" value="10">
+                    </li>
+                 </ul>   
+            </div>
+            <div class="row colors">
+                <label class="title">Colors</label>
+                 <ul class="options">
+                    <li class="option selected"></li>
+                    <li class="option"></li>
+                    <li class="option"></li>
+                    <li class="option"></li>
+                    <li class="option"></li>
+                 </ul>   
+            </div>
+            <div class="buttons">
+                 <button class="clear-canvas">Clear Canvas</button>
+                 <button class="save-img">Save As Image</button>  
+            </div>
+        </section>
+        <section class="drawingboard">
+            <canvas id="mycanvas"></canvas>
+        </section>
+        <script src="script.js"></script>
+    </div>
+</body>
+</html>
