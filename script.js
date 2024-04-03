@@ -3,12 +3,16 @@ const ctx=canvas.getContext('2d');
 const toolBtns=document.querySelectorAll('.tool');
 const fillcolor=document.querySelector('#fill-color');
 const sizeslider=document.querySelector('#size-slider');
-const colorBtns=document.querySelectorAll('.colors .option')
-
+const colorBtns=document.querySelectorAll('.colors .option');
+const colorPicker=document.querySelector('#color-picker');
+const clearCanvas=document.querySelector('.clear-canvas');
+const saveImg=document.querySelector('.save-img');
+console.log(toolBtns)
 let isdrwaing=false,
 brushwidth=5,
 selectedtool='brush',
 prevmousex,prevmousey,
+selectedcolor="#000",
 snap
 
 const setcanvasBackground=()=>{
@@ -22,7 +26,7 @@ const drwaRect=(e)=>{
     }
 
     ctx.fillRect(e.offsetX,e.offsetY,prevmousex-e.offsetX,prevmousey-e.offsetY);
-    ctx.fillStyle='black'
+    
 }
 const drawCircle=(e)=>{
     console.log(e)
@@ -47,7 +51,8 @@ window.addEventListener('load', ()=>{
 const drawing=(e)=>{
     if(!isdrwaing) return;
     ctx.putImageData(snap,0,0)
-    if(selectedtool==='brush'){
+    if(selectedtool==='brush' || selectedtool==='eraser'){
+        ctx.strokeStyle=selectedtool==='eraser'?'#fff':selectedcolor;
         ctx.lineTo(e.offsetX,e.offsetY);
         ctx.stroke();
     }
@@ -72,9 +77,12 @@ const startdraw=(e)=>{
     ctx.beginPath();
     ctx.lineWidth=brushwidth;
     ctx.lineCap='round';
+    ctx.strokeStyle=selectedcolor;
+    ctx.fillStyle=selectedcolor
 }
 
-toolBtns.forEach(btn=>{
+toolBtns.forEach((btn)=>{
+    console.log(btn)
     btn.addEventListener('click',()=>{
         document.querySelector('.options .active').classList.remove('active')
         btn.classList.add('active');
@@ -88,9 +96,24 @@ colorBtns.forEach((btn)=>{
     btn.addEventListener('click', ()=>{
         document.querySelector('.options .selected').classList.remove('selected')
         btn.classList.add('selected');
+        selectedcolor=window.getComputedStyle(btn).getPropertyValue("background-color")
     })
 
 })
+colorPicker.addEventListener('change', ()=>{
+    colorPicker.parentElement.style.background = colorPicker.value;
+    colorPicker.parentElement.click();
+})
+clearCanvas.addEventListener('click', ()=>{
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+});
+saveImg.addEventListener('click', ()=>{
+    const link=document.createElement("a");
+    link.href=canvas.toDataURL();
+    link.download=`${Date.now()}.jpg`;
+    link.click();
+})
+
 sizeslider.addEventListener('change', ()=>brushwidth=sizeslider.value)
 canvas.addEventListener('mousedown', startdraw);
 canvas.addEventListener('mousemove', drawing);
